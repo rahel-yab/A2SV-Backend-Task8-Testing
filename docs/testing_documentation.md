@@ -74,7 +74,7 @@ make setup             # Initial development setup
 
 The CI pipeline enforces quality standards:
 
-- **Minimum Coverage**: 80% test coverage required
+- **Minimum Coverage**: 40% test coverage required
 - **Code Quality**: Must pass linting and vetting
 - **Formatting**: Code must be properly formatted
 - **Dependencies**: All dependencies must be valid
