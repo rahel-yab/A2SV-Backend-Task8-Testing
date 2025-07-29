@@ -48,7 +48,7 @@ func (suite *AuthMiddlewareTestSuite) TestAuthMiddlewareSuite() {
 			Email:    "test@example.com",
 			Role:     "user",
 		}
-		
+
 		jwtService := NewJWTService(string(suite.jwtSecret))
 		token, err := jwtService.GenerateToken(user)
 		suite.NoError(err)
@@ -94,8 +94,8 @@ func (suite *AuthMiddlewareTestSuite) TestAuthMiddlewareSuite() {
 		})
 
 		testCases := []struct {
-			header       string
-			expectedMsg  string
+			header      string
+			expectedMsg string
 		}{
 			{"InvalidToken", "Invalid authorization header"},
 			{"Bearer", "Invalid authorization header"},
@@ -175,7 +175,7 @@ func (suite *AuthMiddlewareTestSuite) TestAuthMiddlewareSuite() {
 			Email:    "test@example.com",
 			Role:     "user",
 		}
-		
+
 		jwtService := NewJWTService("wrong_secret")
 		token, err := jwtService.GenerateToken(user)
 		suite.NoError(err)
@@ -207,7 +207,7 @@ func (suite *AuthMiddlewareTestSuite) TestAdminOnlySuite() {
 			Email:    "admin@example.com",
 			Role:     "admin",
 		}
-		
+
 		jwtService := NewJWTService(string(suite.jwtSecret))
 		token, err := jwtService.GenerateToken(user)
 		suite.NoError(err)
@@ -236,7 +236,7 @@ func (suite *AuthMiddlewareTestSuite) TestAdminOnlySuite() {
 			Email:    "test@example.com",
 			Role:     "user",
 		}
-		
+
 		jwtService := NewJWTService(string(suite.jwtSecret))
 		token, err := jwtService.GenerateToken(user)
 		suite.NoError(err)
@@ -284,14 +284,14 @@ func (suite *AuthMiddlewareTestSuite) TestAuthMiddlewareIntegrationSuite() {
 			Email:    "admin@example.com",
 			Role:     "admin",
 		}
-		
+
 		regularUser := &domain.User{
 			ID:       "user123",
 			Username: "testuser",
 			Email:    "test@example.com",
 			Role:     "user",
 		}
-		
+
 		jwtService := NewJWTService(string(suite.jwtSecret))
 		adminToken, _ := jwtService.GenerateToken(adminUser)
 		userToken, _ := jwtService.GenerateToken(regularUser)
@@ -339,4 +339,4 @@ func (suite *AuthMiddlewareTestSuite) TestAuthMiddlewareIntegrationSuite() {
 // TestAuthMiddlewareSuite runs the test suite
 func TestAuthMiddlewareSuite(t *testing.T) {
 	suite.Run(t, new(AuthMiddlewareTestSuite))
-} 
+}

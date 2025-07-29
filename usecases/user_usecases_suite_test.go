@@ -84,11 +84,11 @@ func (m *MockJWTService) GenerateToken(user *domain.User) (string, error) {
 // UserUsecaseTestSuite is a test suite for UserUsecase
 type UserUsecaseTestSuite struct {
 	suite.Suite
-	mockUserRepo      *MockUserRepository
+	mockUserRepo        *MockUserRepository
 	mockPasswordService *MockPasswordService
-	mockJWTService    *MockJWTService
-	usecase           *UserUsecase
-	ctx               context.Context
+	mockJWTService      *MockJWTService
+	usecase             *UserUsecase
+	ctx                 context.Context
 }
 
 // SetupSuite runs once before all tests in the suite
@@ -138,7 +138,7 @@ func (suite *UserUsecaseTestSuite) TestRegisterUserSuite() {
 		mockPasswordService := new(MockPasswordService)
 		mockJWTService := new(MockJWTService)
 		usecase := NewUserUsecase(mockUserRepo, mockPasswordService, mockJWTService, 5*time.Second)
-		
+
 		username := "testuser"
 		email := "test@example.com"
 		password := "password123"
@@ -155,7 +155,7 @@ func (suite *UserUsecaseTestSuite) TestRegisterUserSuite() {
 
 		suite.NoError(err)
 		suite.Equal("user", role)
-		
+
 		mockUserRepo.AssertExpectations(suite.T())
 		mockPasswordService.AssertExpectations(suite.T())
 		mockJWTService.AssertExpectations(suite.T())
@@ -256,7 +256,7 @@ func (suite *UserUsecaseTestSuite) TestRegisterUserSuite() {
 		mockPasswordService := new(MockPasswordService)
 		mockJWTService := new(MockJWTService)
 		usecase := NewUserUsecase(mockUserRepo, mockPasswordService, mockJWTService, 5*time.Second)
-		
+
 		username := "testuser"
 		email := "test@example.com"
 		password := "password123"
@@ -271,7 +271,7 @@ func (suite *UserUsecaseTestSuite) TestRegisterUserSuite() {
 		suite.Error(err)
 		suite.Equal("hashing error", err.Error())
 		suite.Empty(role)
-		
+
 		mockUserRepo.AssertExpectations(suite.T())
 		mockPasswordService.AssertExpectations(suite.T())
 		mockJWTService.AssertExpectations(suite.T())
@@ -397,7 +397,7 @@ func (suite *UserUsecaseTestSuite) TestLoginUserSuite() {
 		mockPasswordService := new(MockPasswordService)
 		mockJWTService := new(MockJWTService)
 		usecase := NewUserUsecase(mockUserRepo, mockPasswordService, mockJWTService, 5*time.Second)
-		
+
 		usernameOrEmail := "test@example.com"
 		password := "password123"
 
@@ -419,7 +419,7 @@ func (suite *UserUsecaseTestSuite) TestLoginUserSuite() {
 		suite.Equal("JWT generation error", err.Error())
 		suite.Empty(resultToken)
 		suite.Empty(role)
-		
+
 		mockUserRepo.AssertExpectations(suite.T())
 		mockPasswordService.AssertExpectations(suite.T())
 		mockJWTService.AssertExpectations(suite.T())
@@ -462,4 +462,4 @@ func (suite *UserUsecaseTestSuite) TestPromoteUserToAdminSuite() {
 // TestUserUsecaseSuite runs the test suite
 func TestUserUsecaseSuite(t *testing.T) {
 	suite.Run(t, new(UserUsecaseTestSuite))
-} 
+}

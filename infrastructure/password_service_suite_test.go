@@ -154,4 +154,4 @@ func (suite *PasswordServiceTestSuite) TestPasswordServiceIntegrationSuite() {
 // TestPasswordServiceSuite runs the test suite
 func TestPasswordServiceSuite(t *testing.T) {
 	suite.Run(t, new(PasswordServiceTestSuite))
-} 
+}

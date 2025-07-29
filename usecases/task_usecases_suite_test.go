@@ -225,7 +225,7 @@ func (suite *TaskUsecaseTestSuite) TestGetAllTasksSuite() {
 		// Create a new mock for this specific test to avoid interference
 		mockRepo := new(MockTaskRepository)
 		usecase := NewTaskUsecase(mockRepo, 5*time.Second)
-		
+
 		expectedError := errors.New("database connection failed")
 		mockRepo.On("GetAllTasks", mock.AnythingOfType("*context.timerCtx")).Return([]domain.Task{}, expectedError)
 
@@ -336,7 +336,7 @@ func (suite *TaskUsecaseTestSuite) TestUpdateTaskSuite() {
 		// Create a new mock for this specific test to avoid interference
 		mockRepo := new(MockTaskRepository)
 		usecase := NewTaskUsecase(mockRepo, 5*time.Second)
-		
+
 		task := &domain.Task{
 			ID:          "task123",
 			Title:       "Updated Task",
@@ -410,4 +410,4 @@ func (suite *TaskUsecaseTestSuite) TestContextTimeoutSuite() {
 // TestTaskUsecaseSuite runs the test suite
 func TestTaskUsecaseSuite(t *testing.T) {
 	suite.Run(t, new(TaskUsecaseTestSuite))
-} 
+}

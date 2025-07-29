@@ -7,11 +7,13 @@ import (
 	"time"
 )
 
+// TaskUsecase handles business logic for task operations
 type TaskUsecase struct {
 	taskRepository domain.ITaskRepository
 	contextTimeout time.Duration
 }
 
+// NewTaskUsecase creates a new task usecase instance with the required dependencies
 func NewTaskUsecase(taskRepository domain.ITaskRepository, timeout time.Duration) *TaskUsecase {
 	return &TaskUsecase{
 		taskRepository: taskRepository,
@@ -19,6 +21,7 @@ func NewTaskUsecase(taskRepository domain.ITaskRepository, timeout time.Duration
 	}
 }
 
+// Create adds a new task to the system
 func (tu *TaskUsecase) Create(c context.Context, task *domain.Task) error {
 	// Validate task data
 	if task == nil {
@@ -36,7 +39,7 @@ func (tu *TaskUsecase) Create(c context.Context, task *domain.Task) error {
 	if task.DueDate.IsZero() {
 		return errors.New("due date is required")
 	}
-	
+
 	// Validate status values
 	validStatuses := []string{"pending", "in_progress", "completed", "cancelled"}
 	statusValid := false
@@ -55,22 +58,25 @@ func (tu *TaskUsecase) Create(c context.Context, task *domain.Task) error {
 	return tu.taskRepository.AddTask(ctx, task)
 }
 
+// GetAllTasks retrieves all tasks from the system
 func (tu *TaskUsecase) GetAllTasks(c context.Context) ([]domain.Task, error) {
 	ctx, cancel := context.WithTimeout(c, tu.contextTimeout)
 	defer cancel()
 	return tu.taskRepository.GetAllTasks(ctx)
 }
 
+// GetTaskByID retrieves a specific task by its ID
 func (tu *TaskUsecase) GetTaskByID(c context.Context, id string) (*domain.Task, error) {
 	if id == "" {
 		return nil, errors.New("task ID is required")
 	}
-	
+
 	ctx, cancel := context.WithTimeout(c, tu.contextTimeout)
 	defer cancel()
 	return tu.taskRepository.GetTaskByID(ctx, id)
 }
 
+// UpdateTask updates an existing task in the system
 func (tu *TaskUsecase) UpdateTask(c context.Context, task *domain.Task) error {
 	// Validate task data
 	if task == nil {
@@ -91,7 +97,7 @@ func (tu *TaskUsecase) UpdateTask(c context.Context, task *domain.Task) error {
 	if task.DueDate.IsZero() {
 		return errors.New("due date is required")
 	}
-	
+
 	// Validate status values
 	validStatuses := []string{"pending", "in_progress", "completed", "cancelled"}
 	statusValid := false
@@ -110,14 +116,13 @@ func (tu *TaskUsecase) UpdateTask(c context.Context, task *domain.Task) error {
 	return tu.taskRepository.UpdateTask(ctx, task)
 }
 
+// DeleteTask removes a task from the system by its ID
 func (tu *TaskUsecase) DeleteTask(c context.Context, id string) error {
 	if id == "" {
 		return errors.New("task ID is required")
 	}
-	
+
 	ctx, cancel := context.WithTimeout(c, tu.contextTimeout)
 	defer cancel()
 	return tu.taskRepository.DeleteTask(ctx, id)
 }
-
-

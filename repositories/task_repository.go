@@ -43,6 +43,7 @@ type mongoTaskRepository struct {
 	collection *mongo.Collection
 }
 
+// NewTaskRepository creates a new task repository instance with MongoDB client
 func NewTaskRepository(client *mongo.Client) domain.ITaskRepository {
 	db := client.Database("task_manager")
 	return &mongoTaskRepository{

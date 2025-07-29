@@ -180,4 +180,4 @@ func (suite *JWTServiceTestSuite) TestJWTServiceIntegrationSuite() {
 // TestJWTServiceSuite runs the test suite
 func TestJWTServiceSuite(t *testing.T) {
 	suite.Run(t, new(JWTServiceTestSuite))
-} 
+}

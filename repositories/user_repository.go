@@ -13,10 +13,10 @@ import (
 // Used for database serialization/deserialization with bson tags
 type UserDAO struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty"`
-	Username string `bson:"username"`
-	Email    string `bson:"email"`
-	Password string `bson:"password"`
-	Role     string `bson:"role"`
+	Username string             `bson:"username"`
+	Email    string             `bson:"email"`
+	Password string             `bson:"password"`
+	Role     string             `bson:"role"`
 }
 
 func userToDAO(user *domain.User) *UserDAO {
@@ -41,6 +41,7 @@ type mongoUserRepository struct {
 	collection *mongo.Collection
 }
 
+// NewUserRepository creates a new user repository instance with MongoDB client
 func NewUserRepository(client *mongo.Client) domain.IUserRepository {
 	db := client.Database("task_manager")
 	return &mongoUserRepository{
@@ -49,9 +50,9 @@ func NewUserRepository(client *mongo.Client) domain.IUserRepository {
 }
 
 func (r *mongoUserRepository) AddUser(ctx context.Context, user *domain.User) error {
-    dao := userToDAO(user)
-    _, err := r.collection.InsertOne(ctx, dao)
-    return err
+	dao := userToDAO(user)
+	_, err := r.collection.InsertOne(ctx, dao)
+	return err
 }
 
 func (r *mongoUserRepository) GetUserByEmail(ctx context.Context, email string) (*domain.User, error) {

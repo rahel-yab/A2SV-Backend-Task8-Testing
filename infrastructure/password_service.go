@@ -8,6 +8,7 @@ import (
 
 type passwordService struct{}
 
+// NewPasswordService creates a new password service instance
 func NewPasswordService() domain.IPasswordService {
 	return &passwordService{}
 }

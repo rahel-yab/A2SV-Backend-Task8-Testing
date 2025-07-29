@@ -12,6 +12,7 @@ type jwtService struct {
 	secretKey []byte
 }
 
+// NewJWTService creates a new JWT service instance with the provided secret key
 func NewJWTService(secret string) domain.IJWTService {
 	return &jwtService{secretKey: []byte(secret)}
 }

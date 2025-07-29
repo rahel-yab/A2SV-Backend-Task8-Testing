@@ -8,22 +8,25 @@ import (
 	"time"
 )
 
+// UserUsecase handles business logic for user operations
 type UserUsecase struct {
-	userRepository domain.IUserRepository
+	userRepository  domain.IUserRepository
 	passwordService domain.IPasswordService
-	jwtService domain.IJWTService
-	contextTimeout time.Duration
+	jwtService      domain.IJWTService
+	contextTimeout  time.Duration
 }
 
+// NewUserUsecase creates a new user usecase instance with the required dependencies
 func NewUserUsecase(userRepository domain.IUserRepository, passwordService domain.IPasswordService, jwtService domain.IJWTService, timeout time.Duration) *UserUsecase {
 	return &UserUsecase{
-		userRepository: userRepository,
+		userRepository:  userRepository,
 		passwordService: passwordService,
-		jwtService: jwtService,
-		contextTimeout: timeout,
+		jwtService:      jwtService,
+		contextTimeout:  timeout,
 	}
 }
 
+// RegisterUser registers a new user in the system
 func (uu *UserUsecase) RegisterUser(ctx context.Context, username, email, password string) (string, error) {
 	// Validate input parameters
 	if username == "" {
@@ -38,12 +41,12 @@ func (uu *UserUsecase) RegisterUser(ctx context.Context, username, email, passwo
 	if len(password) < 6 {
 		return "", errors.New("password must be at least 6 characters long")
 	}
-	
+
 	// Basic email validation
 	if !strings.Contains(email, "@") {
 		return "", errors.New("invalid email format")
 	}
-	
+
 	c, cancel := context.WithTimeout(ctx, uu.contextTimeout)
 	defer cancel()
 	if exists, _ := uu.userRepository.UserExistsByEmail(c, email); exists {
@@ -73,6 +76,7 @@ func (uu *UserUsecase) RegisterUser(ctx context.Context, username, email, passwo
 	return role, nil
 }
 
+// LoginUser authenticates a user and returns a JWT token
 func (uu *UserUsecase) LoginUser(ctx context.Context, usernameOrEmail, password string) (string, string, error) {
 	// Validate input parameters
 	if usernameOrEmail == "" {
@@ -81,7 +85,7 @@ func (uu *UserUsecase) LoginUser(ctx context.Context, usernameOrEmail, password 
 	if password == "" {
 		return "", "", errors.New("password is required")
 	}
-	
+
 	c, cancel := context.WithTimeout(ctx, uu.contextTimeout)
 	defer cancel()
 	var user *domain.User
@@ -102,12 +106,12 @@ func (uu *UserUsecase) LoginUser(ctx context.Context, usernameOrEmail, password 
 	return token, user.Role, nil
 }
 
+// PromoteUserToAdmin promotes a user to admin role
 func (uu *UserUsecase) PromoteUserToAdmin(ctx context.Context, identifier string) error {
-	// Validate input parameters
 	if identifier == "" {
 		return errors.New("identifier is required")
 	}
-	
+
 	c, cancel := context.WithTimeout(ctx, uu.contextTimeout)
 	defer cancel()
 	return uu.userRepository.PromoteUserToAdmin(c, identifier)

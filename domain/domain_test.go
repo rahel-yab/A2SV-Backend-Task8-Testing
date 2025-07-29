@@ -64,4 +64,4 @@ func TestUser_RoleValidation(t *testing.T) {
 
 	user.Role = "admin"
 	assert.Contains(t, validRoles, user.Role)
-} 
+}
