@@ -19,7 +19,7 @@ task_manager/
 ├── Usecases/
 │   ├── task_usecases_suite_test.go # Task business logic test suite
 │   └── user_usecases_suite_test.go # User business logic test suite
-└── Repositories/               # Data access layer (no tests - integration testing recommended)
+└── Repositories/              
 ```
 
 ## CI/CD Pipeline Integration
@@ -279,14 +279,7 @@ The CI pipeline automatically runs on:
 
 ## Test Coverage Metrics
 
-### Current Coverage (as of latest run)
-
-| Layer              | Coverage         | Status |
-| ------------------ | ---------------- | ------ |
-| **Domain**         | Basic validation | ✅     |
-| **Infrastructure** | 85.2%            | ✅     |
-| **Usecases**       | 95.4%            | ✅     |
-| **Overall**        | 45.9%            | ⚠️     |
+### Current Coverage (overall 68% covered)
 
 ### Coverage Breakdown
 
@@ -301,19 +294,13 @@ The CI pipeline automatically runs on:
 - Task Usecases: 100% (core methods)
 - User Usecases: 96.3% (core methods)
 
-**Areas for Improvement**:
-
-- Delivery layer (Controllers) - 0% (integration testing recommended)
-- Repository layer - 0% (integration testing recommended)
-
 ## Best Practices
 
 ### Test Organization
 
 1. **Use Test Suites**: Organize related tests into suites
-2. **Clear Naming**: Use descriptive test and method names
-3. **Setup/Teardown**: Properly manage test state
-4. **Mock Isolation**: Use mocks for external dependencies
+2. **Setup/Teardown**: Properly manage test state
+3. **Mock Isolation**: Use mocks for external dependencies
 
 ### Test Writing
 
@@ -372,14 +359,5 @@ go tool cover -html=coverage.out
 go test -run TestSpecificTest ./...
 ```
 
-## Conclusion
-
-This comprehensive testing suite provides:
-
-- ✅ **High Coverage**: 95.4% coverage of critical business logic
-- ✅ **Quality Assurance**: Automated quality checks
-- ✅ **CI/CD Integration**: Automated testing pipeline
-- ✅ **Maintainability**: Well-organized, documented tests
-- ✅ **Reliability**: Comprehensive edge case testing
 
 
